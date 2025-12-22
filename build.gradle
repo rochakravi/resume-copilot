@@ -45,12 +45,20 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+// Debug run task: launches the application with remote JVM debug enabled on port 5005
+task bootRunDebug(type: org.springframework.boot.gradle.tasks.run.BootRun) {
+    group = 'application'
+    description = 'Run the Spring Boot app with remote JVM debug on port 5005'
+    // Remote debug: listen on all interfaces port 5005
+    jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
+}
+
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
 	}
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }

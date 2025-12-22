@@ -2,6 +2,7 @@ package com.resume.copilot.service;
 
 //import jakarta.annotation.Resource;
 
+import com.resume.copilot.dto.RequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
@@ -12,8 +13,8 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import org.springframework.core.io.Resource;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class IngestionService {
@@ -49,5 +50,25 @@ public class IngestionService {
         };
         ingestPdf(docSource);
         logger.info("Ingestion completed successfully for file={}", originalFilename);
+    }
+
+    public List<Document> retrieveAnswer(RequestDTO requestDTO) {
+        if (requestDTO == null || requestDTO.prompt() == null) {
+            logger.warn("retrieveAnswer called with empty requestDTO or prompt");
+            return Collections.emptyList();
+        }
+
+        if (this.vectorStore == null) {
+            logger.warn("Attempted retrieveAnswer but VectorStore is not configured; returning empty result");
+            return Collections.emptyList();
+        }
+
+        try {
+            List<Document> docs = vectorStore.similaritySearch(requestDTO.prompt());
+            return docs == null ? Collections.emptyList() : docs;
+        } catch (Exception ex) {
+            logger.error("Error during similaritySearch: {}", ex.getMessage(), ex);
+            return Collections.emptyList();
+        }
     }
 }
