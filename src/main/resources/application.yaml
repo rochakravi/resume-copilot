@@ -1,0 +1,58 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /springai
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+#  ai:
+#    ollama:
+#      chat:
+#        options:
+#          model: llama3
+#  ai:
+#    ollama:
+#      base-url: http://localhost:11434
+#      embedding:
+#        model: llama3
+
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+
+      chat:
+        options:
+          model: llama3.1
+
+      embedding:
+        options:
+          model: nomic-embed-text
+#  ai:
+#    openai:
+#      //api-key: ${OPENAI_KEY}
+#      api-key: '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'
+#      chat:
+#        enabled: true # By default its true, this triggers the autoconfiguration.
+#        options:
+#          model: gpt-4o
+#          temperature: 1.0
+#          max_completion_tokens: 2000
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5440/docs
+    username: postgres
+    password: admin
+    hikari:
+      minimumIdle: 1
+      maximumPoolSize: 10
+      validationQuery: SELECT 1
+
+  flyway:
+    enabled: false
+#ingestion:
+#  enabled: false
