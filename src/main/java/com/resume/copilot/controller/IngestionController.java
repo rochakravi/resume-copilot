@@ -2,31 +2,40 @@ package com.resume.copilot.controller;
 
 import com.resume.copilot.service.IngestionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/ingestion")
 public class IngestionController {
 
-    private final IngestionService ingestionService;
+    private IngestionService ingestionService = null;
 
     public IngestionController(IngestionService ingestionService) {
         this.ingestionService = ingestionService;
     }
 
-    @GetMapping("/test")
-    public String getTest() {
-        return "Test Successful Tested";
-    }
-
-
-    @PostMapping("/ingestion")
-    public ResponseEntity<String> ingestData(@RequestParam("file") MultipartFile file,
-                                             @RequestParam("ingestType") String ingestType) throws Exception {
+    @PostMapping("/upload-resume")
+    public ResponseEntity<String> uploadResume(
+            @RequestParam MultipartFile file,
+            @RequestParam String candidateId,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) Integer experience,
+            @RequestParam(required = false) String skills
+    ) throws Exception {
         byte[] fileContent = file.getBytes();
-        ingestionService.ingestPdf(fileContent, file.getOriginalFilename(), ingestType);
-        return ResponseEntity.ok("File uploaded successfully. ");
-    }
+        ingestionService.ingestResume(
+                candidateId,
+                file
+//                file.getOriginalFilename(),
+//                role,
+//                experience,
+//                skills
+        );
 
+        return ResponseEntity.ok("Resume ingested successfully");
+    }
 }

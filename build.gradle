@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.5.9'
+	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -8,39 +8,44 @@ group = 'com.resume'
 version = '0.0.1-SNAPSHOT'
 description = 'Resume Copilot'
 
+//java {
+//	toolchain {
+//		languageVersion = JavaLanguageVersion.of(25)
+//	}
+//}
+
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(25)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
+}
+
+ext {
+	set('springAiVersion', "1.1.2") // or 1.1.0-M2, but use one value everywhere
 }
 
 repositories {
 	mavenCentral()
 }
 
-ext {
-	set('springAiVersion', "1.1.2")
-}
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.ai:spring-ai-pdf-document-reader'
 
-	//tika document reader
+	implementation 'org.springframework.ai:spring-ai-pdf-document-reader'
 	implementation 'org.springframework.ai:spring-ai-tika-document-reader'
 
-	//openai
-	//implementation("org.springframework.ai:spring-ai-starter-model-openai")
+	implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
+	// implementation 'org.springframework.ai:spring-ai-ollama-spring-boot-starter'
 
+	// PGVector vector store (NEW starter name in 1.1.x) 	// Optional advisors
+	implementation 'org.springframework.ai:spring-ai-starter-vector-store-pgvector'
+	implementation 'org.springframework.ai:spring-ai-advisors-vector-store'
+
+//	implementation("org.springframework.ai:spring-ai-starter-model-openai")
 //	implementation 'org.springframework.ai:spring-ai-starter-model-bedrock'
 //	implementation 'org.springframework.ai:spring-ai-starter-model-bedrock-converse'
 
-	// Ollama (chat + embeddings)
-	implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
-
-	// Vector store
-    implementation 'org.springframework.ai:spring-ai-starter-vector-store-pgvector'
-	implementation 'org.springframework.ai:spring-ai-advisors-vector-store'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -49,8 +54,4 @@ dependencyManagement {
 	imports {
 		mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
 	}
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }
