@@ -32,7 +32,6 @@ spring:
 #  ai:
 #    openai:
 #      //api-key: ${OPENAI_KEY}
-#      api-key: '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'
 #      chat:
 #        enabled: true # By default its true, this triggers the autoconfiguration.
 #        options:
