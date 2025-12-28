@@ -1,5 +1,8 @@
 package com.resume.copilot.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.resume.copilot.dto.AskMeAnythingResponse;
 import com.resume.copilot.dto.ResumeQueryRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +27,13 @@ public class IngestionService {
 
     private final VectorStore vectorStore;
     private final ChatClient chatClient;
+    private final ObjectMapper objectMapper;
 
 
-    public IngestionService(VectorStore vectorStore, ChatClient.Builder builder) {
+    public IngestionService(VectorStore vectorStore, ChatClient.Builder builder, ObjectMapper objectMapper) {
         this.vectorStore = vectorStore;
         this.chatClient = builder.build();
+        this.objectMapper = objectMapper;
     }
 
 
@@ -70,26 +75,41 @@ public class IngestionService {
         vectorStore.add(safeDocs);
     }
 
-    public String askResume(ResumeQueryRequest request) {
+    public AskMeAnythingResponse askResume(ResumeQueryRequest request) throws JsonProcessingException {
 
         List<Document> docs = vectorStore.similaritySearch(request.question());
         logger.info("Found {} similar documents for question: {}", docs.size(), request.question());
-        if (docs.isEmpty()) {
-            return "No resume data found for this candidate.";
-        }
+//        if (docs.isEmpty()) {
+//            return "No resume data found for this candidate.";
+//        }
 
         String context = docs.stream()
                 .map(Document::getText)
                 .collect(Collectors.joining("\n"));
 
-
-        return chatClient
+        String answer = chatClient
                 .prompt()
+//                .system("""
+//                            You are a Resume Analysis AI.
+//                            Answer ONLY using the provided resume content.
+//                            If data is not present, say "Not mentioned in resume".
+//                        """)
                 .system("""
-                            You are a Resume Analysis AI.
-                            Answer ONLY using the provided resume content.
-                            If data is not present, say "Not mentioned in resume".
-                        """)
+        You are a Resume Analysis AI helping a recruiter understand a candidate.
+        Use ONLY the provided resume content.
+        If the answer is not present, say "Not mentioned in resume" in the `answer` field.
+
+        Respond STRICTLY as a JSON object with this schema:
+        {
+          "answer": "short natural-language answer for the chat bubble",
+          "highlights": ["bullet 1", "bullet 2"],
+          "meta": {
+            "source": "resume",
+            "confidence": 0.0 to 1.0
+          }
+        }
+        Do not include any extra text outside the JSON.
+        """)
                 .user("""
                             Resume Content:
                             %s
@@ -99,6 +119,10 @@ public class IngestionService {
                         """.formatted(context, request.question()))
                 .call()
                 .content();
+
+        return objectMapper.readValue(answer, AskMeAnythingResponse.class);
+
+       // return answer;
     }
 }
 

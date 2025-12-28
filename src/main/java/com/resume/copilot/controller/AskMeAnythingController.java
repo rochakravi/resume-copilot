@@ -1,5 +1,7 @@
 package com.resume.copilot.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.resume.copilot.dto.AskMeAnythingResponse;
 import com.resume.copilot.dto.ResumeQueryRequest;
 import com.resume.copilot.service.IngestionService;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,14 @@ public class AskMeAnythingController {
     }
 
     @PostMapping("/ask-me-anything")
-    public ResponseEntity<String> askResume(@RequestBody ResumeQueryRequest request) {
+    public ResponseEntity<AskMeAnythingResponse> askResume(@RequestBody ResumeQueryRequest request) {
 
-        String answer = ingestionService.askResume(request);
+        AskMeAnythingResponse answer = null;
+        try {
+            answer = ingestionService.askResume(request);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         return ResponseEntity.ok(answer);
     }
 }
