@@ -1,0 +1,27 @@
+Angular Experience:
+- Total experience: 9 years
+- Angular versions used: 2, 4, 6, 8, 10, 12, 14, 16, 17, 18, 19
+- Last used Angular in year 2025
+- Used Angular for multiple applicaions including enterprise-level projects
+
+React Experience:
+- Total experience: 8 years
+- React versions used: 2, 4, 6, 8, 10, 12, 14, 16, 17, 18, 19
+- Last used React in year 2025
+- Used React for multiple applicaions including enterprise-level projects
+
+Java Experience:
+- Total experience: 11 years
+- Java versions used: 8, 11, 17, 21
+- Strong experience in Spring Boot and Microservices
+
+GenAI Experience:
+- Experience in RAG-based applications
+- Used Ollama for local LLMs
+- Used Amazon Bedrock for managed LLMs
+- Vector database: pgvector (PostgreSQL)
+
+DevOps & Cloud:
+- Docker used for local development
+- Kubernetes exposure in production environments
+- AWS services used: EC2, S3, RDS, IAM
