@@ -38,4 +38,19 @@ public class IngestionController {
 
         return ResponseEntity.ok("Resume ingested successfully");
     }
+
+    @PostMapping("/upload-fact-sheet")
+    public ResponseEntity<String> uploadFactSheet(
+            @RequestParam MultipartFile file,
+            @RequestParam String candidateId
+    ) throws Exception {
+        byte[] fileContent = file.getBytes();
+        ingestionService.ingestFacts(
+                candidateId,
+                file
+        );
+
+        return ResponseEntity.ok("Fact sheet ingested successfully");
+    }
+
 }
