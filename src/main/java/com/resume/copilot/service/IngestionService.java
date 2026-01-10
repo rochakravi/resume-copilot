@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -74,6 +75,27 @@ public class IngestionService {
 
         vectorStore.add(safeDocs);
     }
+
+    public void ingestFacts(String candidateId, MultipartFile file) throws IOException {
+
+        String text = new String(file.getBytes(), StandardCharsets.UTF_8);
+
+        if (text.isBlank()) {
+            throw new IllegalArgumentException("Fact sheet is empty");
+        }
+
+        Document document = Document.builder()
+                .text(text)
+                .metadata(Map.of(
+                        "candidateId", candidateId,
+                        "source", "fact_sheet",
+                        "priority", "high"
+                ))
+                .build();
+
+        vectorStore.add(List.of(document));
+    }
+
 
     public AskMeAnythingResponse askResume(ResumeQueryRequest request) throws JsonProcessingException {
 
