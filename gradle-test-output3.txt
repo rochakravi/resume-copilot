@@ -1,0 +1,19 @@
+> Task :flight-booking:compileJava UP-TO-DATE
+> Task :flight-booking:processResources UP-TO-DATE
+> Task :flight-booking:classes UP-TO-DATE
+> Task :flight-booking:jar UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :test
+> Task :flight-booking:compileTestJava
+> Task :flight-booking:processTestResources NO-SOURCE
+> Task :flight-booking:testClasses
+> Task :flight-booking:test NO-SOURCE
+
+BUILD SUCCESSFUL in 4s
+8 actionable tasks: 3 executed, 5 up-to-date

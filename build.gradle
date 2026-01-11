@@ -20,9 +20,11 @@ ext {
 
 repositories {
 	mavenCentral()
+	maven { url = 'https://repo.spring.io/milestone' }
 }
 
 dependencies {
+	implementation project(':flight-booking')
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	//implementation 'org.springframework.ai:spring-ai-core'
@@ -37,16 +39,36 @@ dependencies {
 	implementation 'org.springframework.ai:spring-ai-starter-vector-store-pgvector'
 	implementation 'org.springframework.ai:spring-ai-advisors-vector-store'
 
-//	implementation("org.springframework.ai:spring-ai-starter-model-openai")
-//	implementation 'org.springframework.ai:spring-ai-starter-model-bedrock'
-//	implementation 'org.springframework.ai:spring-ai-starter-model-bedrock-converse'
+////	implementation("org.springframework.ai:spring-ai-starter-model-openai")
+////	implementation 'org.springframework.ai:spring-ai-starter-model-bedrock'
+////	implementation 'org.springframework.ai:spring-ai-starter-model-bedrock-converse'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// Explicit test framework implementation to satisfy Gradle 8+ requirements
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+		mavenBom "org.springframework.boot:spring-boot-dependencies:3.3.5"
 	}
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+
+	repositories {
+		mavenCentral()
+		maven { url = 'https://repo.spring.io/milestone' }
+	}
+}
+
+// Ensure all Test tasks use JUnit Platform explicitly (removes deprecation about automatic test framework loading)
+import org.gradle.api.tasks.testing.Test
+
+tasks.withType(Test).configureEach {
+	useJUnitPlatform()
 }

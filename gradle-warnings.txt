@@ -1,0 +1,52 @@
+
+> Configure project :
+Build file '/Users/ravirajsingh/Documents/code/2026/copilot/build.gradle': line 23
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('url = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_41y9itrtue29wey4sf64fshn5$_run_closure3$_closure8.doCall$original(/Users/ravirajsingh/Documents/code/2026/copilot/build.gradle:23)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_41y9itrtue29wey4sf64fshn5$_run_closure3.doCall$original(/Users/ravirajsingh/Documents/code/2026/copilot/build.gradle:23)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/Users/ravirajsingh/Documents/code/2026/copilot/build.gradle': line 63
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('url = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_41y9itrtue29wey4sf64fshn5$_run_closure6$_closure10$_closure11.doCall$original(/Users/ravirajsingh/Documents/code/2026/copilot/build.gradle:63)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_41y9itrtue29wey4sf64fshn5$_run_closure6$_closure10.doCall$original(/Users/ravirajsingh/Documents/code/2026/copilot/build.gradle:63)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Task :clean
+> Task :flight-booking:clean
+> Task :flight-booking:compileJava
+> Task :flight-booking:processResources
+> Task :flight-booking:classes
+> Task :flight-booking:jar
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :resolveMainClassName
+> Task :bootJar
+> Task :jar
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+
+> Task :test
+The automatic loading of test framework implementation dependencies has been deprecated. This is scheduled to be removed in Gradle 9.0. Declare the desired test framework directly on the test suite or explicitly declare the test framework implementation dependencies on the test's runtime classpath. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#test_framework_implementation_dependencies
+No test executed. This behavior has been deprecated. This will fail with an error in Gradle 9.0. There are test sources present but no test was executed. Please check your test configuration. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#test_task_fail_on_no_test_executed
+
+> Task :check
+> Task :build
+> Task :flight-booking:resolveMainClassName
+> Task :flight-booking:bootJar
+> Task :flight-booking:assemble
+> Task :flight-booking:compileTestJava
+> Task :flight-booking:processTestResources NO-SOURCE
+> Task :flight-booking:testClasses
+> Task :flight-booking:test NO-SOURCE
+> Task :flight-booking:check UP-TO-DATE
+> Task :flight-booking:build
+
+[Incubating] Problems report is available at: file:///Users/ravirajsingh/Documents/code/2026/copilot/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 3s
+15 actionable tasks: 15 executed
