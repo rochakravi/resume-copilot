@@ -2,6 +2,9 @@ server:
   port: 8080
   servlet:
     context-path: /ai-assistant
+  tomcat:
+    connection-timeout: 60000
+
 spring:
   servlet:
     multipart:

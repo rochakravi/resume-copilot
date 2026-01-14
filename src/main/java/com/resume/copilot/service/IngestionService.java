@@ -53,7 +53,8 @@ public class IngestionService {
 
     public void ingestResume(
             String candidateId,
-            MultipartFile file
+            MultipartFile file,
+String userId
 //            String filename,
 //            String role,
 //            Integer experience,
@@ -69,6 +70,8 @@ public class IngestionService {
                 .filter(d -> d.getText() != null && !d.getText().isBlank())
                 .map(d -> Document.builder()
                         .text(d.getText())
+                        .metadata(Map.of("userId", userId,  // ← ADD THIS LINE
+                                "candidateId", candidateId))
                         .metadata(cleanMetadata(d.getMetadata()))
                         .build())
                 .toList();
@@ -76,7 +79,7 @@ public class IngestionService {
         vectorStore.add(safeDocs);
     }
 
-    public void ingestFacts(String candidateId, MultipartFile file) throws IOException {
+    public void ingestFacts(String candidateId, MultipartFile file, String userId) throws IOException {
 
         String text = new String(file.getBytes(), StandardCharsets.UTF_8);
 
@@ -89,7 +92,8 @@ public class IngestionService {
                 .metadata(Map.of(
                         "candidateId", candidateId,
                         "source", "fact_sheet",
-                        "priority", "high"
+                        "priority", "high",
+                        "userId", userId
                 ))
                 .build();
 
